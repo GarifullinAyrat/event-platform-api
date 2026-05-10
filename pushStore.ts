@@ -1,0 +1,1 @@
+import{t as e}from"./apiClient-DkBdb2vT.js";import{z as t}from"./index-BWPxR6PB.js";var n=t(({app:t})=>{t.config.globalProperties.$api=e});export{e as apiClient,n as default};

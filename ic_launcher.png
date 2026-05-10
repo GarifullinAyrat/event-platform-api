@@ -1,0 +1,1 @@
+h1[data-v-7ca62b57]{margin:0 0 18px;font-size:1.6rem}.toolbar-row[data-v-7ca62b57]{align-items:center;gap:14px;margin-bottom:16px;display:flex}.sessions-grid[data-v-7ca62b57]{grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;display:grid}.session-title[data-v-7ca62b57]{font-size:1rem;font-weight:700}

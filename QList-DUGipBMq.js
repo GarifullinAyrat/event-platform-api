@@ -1,0 +1,1 @@
+function e(e,t,n){return n<=t?t:Math.min(n,Math.max(t,e))}export{e as t};

@@ -1,0 +1,106 @@
+# Event Platform
+
+Кроссплатформенное приложение для управления событиями с модулями опросов, оценок сессий, чата и push-уведомлений.
+
+## Стек
+
+- Frontend: Quasar, Vue 3, Pinia, Vue Router
+- PWA: Service Worker, IndexedDB через Dexie
+- Сеть: Axios, WebSocket
+- Стили: SCSS, Quasar UI
+- TypeScript: строгая типизация
+
+## Запуск
+
+```bash
+npm install
+npm run mock
+```
+
+Во втором терминале:
+
+```bash
+npm run dev
+```
+
+Mock API будет доступен на `http://localhost:3000`, WebSocket чат на `ws://localhost:3000/chat`.
+
+PWA-сборка:
+
+```bash
+npm run build:pwa
+```
+
+Создайте `.env` на основе `env.example`:
+
+```env
+VITE_API_BASE_URL=http://localhost:3000
+VITE_WS_URL=ws://localhost:3000
+VITE_BUILD_ENV=dev
+VITE_APP_VERSION=0.1.0
+```
+
+## Архитектура
+
+```text
+src/
+├── app/
+│   ├── entities/
+│   ├── services/
+│   ├── stores/
+│   ├── pages/
+│   ├── widgets/
+│   └── shared/
+├── boot/
+├── router/
+└── pwa/
+```
+
+## Offline-first
+
+Данные модулей кэшируются в IndexedDB. Опросы, оценки и регистрация push-токена используют оптимистичные обновления и очередь `syncQueue`; при возвращении сети layout вызывает `flushQueue`.
+
+## API
+
+- `GET /features?eventId={id}`
+- `GET /events/{id}/polls`
+- `POST /events/{id}/polls/{pollId}/answers`
+- `GET /events/{id}/ratings/sessions`
+- `POST /events/{id}/ratings/{sessionId}`
+- `GET /events/{id}/chat/rooms`
+- `WS /chat?eventId={id}&token={token}`
+- `POST /push/register`
+
+## QA
+
+- Чат: открыть, свернуть на 20 секунд, вернуть, убедиться что сообщения приходят.
+- Сеть: трижды offline/online, проверить переподписку чата и flush очереди.
+- Feature flags: при выключенных флагах модуль показывает пустой gated state.
+- Push: проверить alert push и background update на HTTPS/dev device.
+- Форматирование телефонов: пустые значения возвращают пустую строку.
+
+## Мобильное приложение
+
+Android:
+
+```bash
+npm install
+npm run cap:add:android
+npm run cap:sync:android
+npm run cap:open:android
+```
+
+После этого Android Studio откроет проект. Подключите телефон по USB, включите Developer Mode и USB debugging, затем нажмите Run.
+
+Capacitor использует обычную SPA-сборку из `dist/spa`. PWA-сборка нужна только для установки из браузера, не для APK.
+
+iOS:
+
+```bash
+npm install
+npm run cap:add:ios
+npm run cap:sync:ios
+npm run cap:open:ios
+```
+
+iOS-сборка требует macOS, Xcode и Apple Developer аккаунт для установки на реальное устройство.

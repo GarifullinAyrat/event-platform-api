@@ -1,0 +1,15 @@
+{
+  "extends": "./.quasar/tsconfig.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "app/*": ["src/app/*"],
+      "boot/*": ["src/boot/*"],
+      "pages/*": ["src/app/pages/*"],
+      "stores/*": ["src/app/stores/*"],
+      "src/*": ["src/*"]
+    },
+    "types": ["node"]
+  },
+  "include": ["src/**/*.ts", "src/**/*.vue", "src/**/*.d.ts", "quasar.config.ts"]
+}
